@@ -1,0 +1,83 @@
+#=======================================
+#  New Fields
+#=======================================
+
+#=======================================
+#  Field ST_FLD_ACCOUNT_TYPE
+#=======================================
+STRING ST_FLD_ACCOUNT_TYPE {
+
+	ID = 10001;
+	DESCR = "ACCOUNT_TYPE";
+}
+#=======================================
+#  Storable Class /profile/iot
+#=======================================
+
+STORABLE CLASS /profile/iot {
+
+	READ_ACCESS = "Self";
+	WRITE_ACCESS = "Self";
+	DESCR = "Table to Store Saralam Custom Profile";
+	IS_PARTITIONED = "0";
+
+
+	SUBSTRUCT PIN_FLD_PROFILE_INFO {
+
+		DESCR = "Table to store custom Saralam profile data";
+		ORDER = 0;
+		AUDITABLE = 0;
+		ENCRYPTABLE = 0;
+		SERIALIZABLE = 0;
+
+		#===================
+		#  Fields 
+		#===================
+
+
+		STRING ST_FLD_ACCOUNT_TYPE {
+
+			DESCR = "Account Type";
+			ORDER = 0;
+			LENGTH = 120;
+			CREATE = Optional;
+			MODIFY = Writeable;
+			AUDITABLE = 1;
+			ENCRYPTABLE = 0;
+			SERIALIZABLE = 0;
+		}
+
+	}
+
+}
+
+
+#=======================================
+#  Storable Class /profile/iot
+#=======================================
+
+STORABLE CLASS /profile/iot IMPLEMENTATION ORACLE7 {
+
+
+	#===================
+	#  Fields 
+	#===================
+
+
+	SUBSTRUCT PIN_FLD_PROFILE_INFO {
+
+		SQL_TABLE = "profile_iot_t";
+
+		#===================
+		#  Fields 
+		#===================
+
+
+		STRING ST_FLD_ACCOUNT_TYPE {
+
+			SQL_COLUMN = "ACCOUNT_TYPE";
+		}
+	}
+
+}
+

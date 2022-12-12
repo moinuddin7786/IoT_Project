@@ -1,0 +1,117 @@
+#=======================================
+#  Storable Class /event/session/iot
+#=======================================
+
+STORABLE CLASS /event/session/iot {
+
+	READ_ACCESS = "BrandLineage";
+	WRITE_ACCESS = "BrandLineage";
+	DESCR = "Table to Store Saralam Custom Profile";
+	IS_PARTITIONED = "1";
+    PARTITION_MODE = "Finite";
+
+
+	SUBSTRUCT PIN_FLD_INHERITED_INFO{
+
+		DESCR = "Table to store custom Saralam profile data";
+		ORDER = 0;
+		AUDITABLE = 0;
+		ENCRYPTABLE = 0;
+		SERIALIZABLE = 0;
+
+		#===================
+		#  Fields 
+		#===================
+
+
+			STRING PIN_FLD_IMSI {
+
+			DESCR = "The logical name of the connected access point to the external packet data network.  IOT comprises of network identifier and operator identifier.  APN can also be a wildcard.";
+			ORDER = 18;
+			LENGTH = 255;
+			CREATE = Optional;
+			MODIFY = Writeable;
+			AUDITABLE = 0;
+			ENCRYPTABLE = 0;
+			SERIALIZABLE = 0;
+		}
+		
+			STRING PIN_FLD_MSISDN {
+
+			DESCR = "The logical name of the connected access point to the external packet data network.  IOT comprises of network identifier and operator identifier.  APN can also be a wildcard.";
+			ORDER = 18;
+			LENGTH = 255;
+			CREATE = Optional;
+			MODIFY = Writeable;
+			AUDITABLE = 0;
+			ENCRYPTABLE = 0;
+			SERIALIZABLE = 0;
+		}
+		
+			INT PIN_FLD_BYTES_IN {
+
+            DESCR = "Bytes sent from server to client.";
+            ORDER = 0;
+            CREATE = Optional;
+            MODIFY = Writeable;
+            AUDITABLE = 0;
+            ENCRYPTABLE = 0;
+            SERIALIZABLE = 0;
+        }
+
+			INT PIN_FLD_BYTES_OUT {
+
+            DESCR = "Bytes sent from client to server.";
+            ORDER = 0;
+            CREATE = Optional;
+            MODIFY = Writeable;
+            AUDITABLE = 0;
+            ENCRYPTABLE = 0;
+            SERIALIZABLE = 0;
+        }
+
+	}
+
+}
+
+#=======================================
+#  Storable Class /event/session/iot
+#=======================================
+
+STORABLE CLASS /event/session/iot IMPLEMENTATION ORACLE7 {
+
+	#===================
+	#  Fields 
+	#===================
+
+
+	SUBSTRUCT PIN_FLD_INHERITED_INFO{
+
+		SQL_TABLE = "event_session_iot_t";
+
+		#===================
+		#  Fields 
+		#===================
+
+		STRING PIN_FLD_IMSI {
+
+			SQL_COLUMN = "IMSI_No";
+		}
+		
+		STRING PIN_FLD_MSISDN {
+
+			SQL_COLUMN = "MSISDN_No";
+		}
+		
+		INT PIN_FLD_BYTES_IN {
+
+			SQL_COLUMN = "Bytes_In";
+		}
+		
+		INT PIN_FLD_BYTES_OUT {
+
+			SQL_COLUMN = "Bytes_Out";
+		}
+	}
+
+}

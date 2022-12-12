@@ -1,0 +1,155 @@
+
+#=======================================
+#  Storable Class /service/iot/subscription
+#=======================================
+
+STORABLE CLASS /service/iot/subscription {
+
+	READ_ACCESS = "BrandLineage";
+	WRITE_ACCESS = "BrandLineage";
+	DESCR = "This service object provides an identity to a iot service user.";
+	IS_PARTITIONED = "0";
+
+	#===================
+	#  Fields 
+	#===================
+
+	ARRAY PIN_FLD_CONTENT_CATEGORIES {
+
+		DESCR = "Array of iot categories.  Each element in this array represents a different conetnt category.";
+		ORDER = 1;
+		AUDITABLE = 0;
+		ENCRYPTABLE = 0;
+		SERIALIZABLE = 0;
+
+		#===================
+		#  Fields 
+		#===================
+
+		ARRAY PIN_FLD_CONTENT_CATEGORY_LIST {
+
+			DESCR = "Array of iot categories. Each element in this array represents a different  iot category.";
+			ORDER = 0;
+			AUDITABLE = 0;
+			ENCRYPTABLE = 0;
+			SERIALIZABLE = 0;
+
+			#===================
+			#  Fields 
+			#===================
+
+			STRING PIN_FLD_CONTENT_CATEGORY_NAME {
+
+				DESCR = "Category name.";
+				ORDER = 0;
+				LENGTH = 255;
+				CREATE = Required;
+				MODIFY = Writeable;
+				AUDITABLE = 0;
+				ENCRYPTABLE = 0;
+				SERIALIZABLE = 0;
+			}
+
+		}
+
+		ENUM PIN_FLD_MODE {
+
+			DESCR = "The mode of PIN_FLD_CONTENT_CATEGORIES. Values are PIN_CONTENT_MODE_ALLOW, PIN_CONTENT_MODE_DENY. When the service object is used as a  service profile the only valid mode is the  allowed mode. The PIN_MODE_DENY can be used by users to block access to certain iot  categories.";
+			ORDER = 0;
+			CREATE = Optional;
+			MODIFY = Writeable;
+			AUDITABLE = 0;
+			ENCRYPTABLE = 0;
+			SERIALIZABLE = 0;
+		}
+
+	}
+
+	ARRAY PIN_FLD_PROFILES {
+
+		DESCR = "Array containing all profiles associated with this service object";
+		ORDER = 0;
+		AUDITABLE = 0;
+		ENCRYPTABLE = 0;
+		SERIALIZABLE = 0;
+
+		#===================
+		#  Fields 
+		#===================
+
+		POID PIN_FLD_PROFILE_OBJ {
+
+			DESCR = "Link to another service object of the same type which contains common attributes that one or more services may use.";
+			ORDER = 0;
+			CREATE = Optional;
+			MODIFY = Writeable;
+			AUDITABLE = 0;
+			ENCRYPTABLE = 0;
+			SERIALIZABLE = 0;
+		}
+
+	}
+
+}
+
+
+#=======================================
+#  Storable Class /service/iot/subscription
+#=======================================
+
+STORABLE CLASS /service/iot/subscription IMPLEMENTATION ORACLE7 {
+
+
+	#===================
+	#  Fields 
+	#===================
+
+	ARRAY PIN_FLD_CONTENT_CATEGORIES {
+
+		SQL_TABLE = "service_iot_categories_t";
+		SQL_STORAGE = "tablespace pin10 initrans 2 storage (initial 30k next 30k maxextents unlimited pctincrease 0 freelists 2 )";
+
+		#===================
+		#  Fields 
+		#===================
+
+		ARRAY PIN_FLD_CONTENT_CATEGORY_LIST {
+
+			SQL_TABLE = "service_iot_cat_list_t";
+
+			#===================
+			#  Fields 
+			#===================
+
+			STRING PIN_FLD_CONTENT_CATEGORY_NAME {
+
+				SQL_COLUMN = "category_name";
+			}
+
+		}
+
+		ENUM PIN_FLD_MODE {
+
+			SQL_COLUMN = "category_mode";
+		}
+
+	}
+
+	ARRAY PIN_FLD_PROFILES {
+
+		SQL_TABLE = "service_iot_profiles_t";
+		SQL_STORAGE = "tablespace pin10 initrans 2 storage (initial 30k next 30k maxextents unlimited pctincrease 0 freelists 2 )";
+
+		#===================
+		#  Fields 
+		#===================
+
+		POID PIN_FLD_PROFILE_OBJ {
+
+			SQL_COLUMN = "profobj";
+		}
+
+	}
+
+}
+
